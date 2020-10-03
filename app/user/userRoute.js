@@ -7,8 +7,7 @@ const express = require('express');
 
 const userHandler = require('./userHandler');
 
-// //Initialize Express Router
-
+const passport = require('../auth');
 const router = express.Router();
 
 router.post('/', (req, res) => {
@@ -17,6 +16,10 @@ router.post('/', (req, res) => {
     .saveUser(name, email, password)
     .then((data) => res.send(data))
     .catch((err) => res.send(err));
+});
+
+router.post('/login', passport.authenticate('local'), function (req, res) {
+  res.sendStatus(200);
 });
 
 /************

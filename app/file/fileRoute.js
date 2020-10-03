@@ -29,6 +29,14 @@ router.post('/', upload.any(), (req, res) => {
   res.sendStatus(201);
 });
 
+router.get('/search', (req, res) => {
+  const { name } = req.query;
+  fileHandler
+    .search(name, req.user.id)
+    .then((data) => res.send(data))
+    .catch((err) => res.sendStatus(500));
+});
+
 // http://localhost:7000/file?name=name.jpg&folderId=1
 router.get('/', (req, res) => {
   const { name, folderId } = req.query;

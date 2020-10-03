@@ -10,4 +10,21 @@ function deleteFile(name, parentId, ownerId) {
     fs.unlink(`./assets/${ownerId}_${parentId}_${name}`, () => resolve('done'));
   });
 }
-module.exports = { deleteFile };
+
+function search(name, ownerId) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(`./assets`, (err, files) => {
+      if (err) reject('error');
+      const result = files.filter((val) => {
+        const x = val.split('_');
+        const owner = x[0];
+        const folder = x[1];
+
+        if (owner == ownerId && x[2].includes(name)) return val;
+      });
+
+      resolve(result);
+    });
+  });
+}
+module.exports = { deleteFile, search };

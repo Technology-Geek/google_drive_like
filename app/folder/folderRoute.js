@@ -28,10 +28,10 @@ router.get('/folders', (req, res) => {
 });
 
 router.get('/search', (req, res) => {
-  const { name, parentId, num, page } = req.query;
+  const { name } = req.query;
   folderHandler
-    .searchSubFolderWithPagination(name, req.user.id, parentId)
-    .then((data) => res.json(data))
+    .searchSubFolderWithPagination(name, req.user.id)
+    .then((data) => res.send(data))
     .catch((err) => res.sendStatus(500));
 });
 

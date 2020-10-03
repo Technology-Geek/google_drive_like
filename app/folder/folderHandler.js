@@ -61,11 +61,12 @@ function getSubFilesWithPagination(ownerId, folderId, num) {
   });
 }
 
-function searchSubFolderWithPagination(name, ownerId, parentId) {
+function searchSubFolderWithPagination(name, ownerId) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT folders.name FROM folders JOIN owners ON
       folders.id=owners.folderId
-          WHERE owners.userId=${ownerId} AND folders.parentId=${parentId} AND folders.name="${name}"`;
+          WHERE owners.userId=${ownerId} AND
+          folders.name LIKE "%${name}%"`;
     db.query(sql, (err, result) => {
       if (err) return reject(dbErrorHandler(err));
       else {
